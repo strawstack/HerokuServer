@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'url';
+import { readdirSync } from 'fs';
 import { dirname } from 'path';
 import express from 'express';
 import path from 'path';
@@ -13,9 +14,30 @@ app.use(express.static(path.join(__dirname, 'src')));
 //
 // Routes
 //
-app.get('/', (_, res) => {
+app.get('/', (req, res) => {
   res.sendFile('src/index.html');
 });
+
+//
+// Sub routes
+//
+// import { routes as rhymesRoutes } from './src/p/rhymes/routes.js';
+// rhymesRoutes(app);
+for (let dir of readdirSync('src/p')) {
+  const moduleDir = `./src/p/${dir}/routes.js`;
+  const { routes } = await import(moduleDir);
+  routes({
+    get: (path, callback) => {
+      app.get(`/p/${dir}${path}`, (req, res) => {
+          callback(req, res);
+      });
+    },
+    post: (path, callback) => {
+      app.post(`/p/${dir}${path}`, (req, res) => {
+          callback(req, res);
+      });
+    }});
+}
 
 //
 // Start Server
@@ -37,4 +59,4 @@ process.on('SIGTERM', async () => {
       console.log('HTTP server closed');
     })
   }
-})
+});
