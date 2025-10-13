@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-const rhyme_lookup = JSON.parse(readFileSync("rhymes.json", "utf-8"));
+const rhyme_lookup = JSON.parse(readFileSync("src/p/rhymes/rhymes.json", "utf-8"));
 
 export function routes({ get }) {
     get("/", (req, res) => {

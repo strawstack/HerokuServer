@@ -23,21 +23,32 @@ app.get('/', (req, res) => {
 //
 // import { routes as rhymesRoutes } from './src/p/rhymes/routes.js';
 // rhymesRoutes(app);
+const endpoints = {};
 for (let dir of readdirSync('src/p')) {
   const moduleDir = `./src/p/${dir}/routes.js`;
   const { routes } = await import(moduleDir);
+  endpoints[dir] = {};
   routes({
     get: (path, callback) => {
+      endpoints[dir][path] = true;
       app.get(`/p/${dir}${path}`, (req, res) => {
-          callback(req, res);
+        callback(req, res);
       });
     },
     post: (path, callback) => {
+      endpoints[dir][path] = true;
       app.post(`/p/${dir}${path}`, (req, res) => {
           callback(req, res);
       });
     }});
 }
+
+//
+// Documentation endpoint
+//
+app.get('/endpoints', (req, res) => {
+  res.send(JSON.stringify(endpoints));
+});
 
 //
 // Start Server
