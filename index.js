@@ -29,18 +29,20 @@ for (let dir of readdirSync('src/p')) {
   const { routes } = await import(moduleDir);
   endpoints[dir] = {};
   routes({
-    get: (path, callback) => {
-      endpoints[dir][path] = true;
-      app.get(`/p/${dir}${path}`, (req, res) => {
-        callback(req, res);
-      });
+    get: ({route, query, desc, rtn, callback}) => {
+      
+      endpoints[dir][route] = {
+        type: "GET",
+        query,
+        desc,
+        rtn
+      };
+      app.get(`/p/${dir}${route}`, (req, res) => callback(req, res));
     },
     post: (path, callback) => {
-      endpoints[dir][path] = true;
-      app.post(`/p/${dir}${path}`, (req, res) => {
-          callback(req, res);
-      });
-    }});
+      // Implement simillar to above GET request
+    }
+  });
 }
 
 //
