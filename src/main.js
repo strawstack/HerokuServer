@@ -12,12 +12,12 @@
     //
     // Environment detection
     //
-    const DEV = !window.location.href.includes("heroku");
+    const DEV = window.location.href.includes("localhost");
     const BASE = (() => {
         if (DEV) {
             return "http://localhost:5006";
         } else {
-            return "https://heroku-server-rch-22279f2bdd5b.herokuapp.com";
+            return "https://www.rch.app";
         }
     })();
 
