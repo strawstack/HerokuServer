@@ -17,7 +17,12 @@
         if (DEV) {
             return "http://localhost:5006";
         } else {
-            return "https://www.rch.app";
+            const CUSTOM = !window.location.href.includes("heroku");
+            if (CUSTOM) {
+                return "https://www.rch.app";
+            } else {
+                return "https://heroku-server-rch-22279f2bdd5b.herokuapp.com";
+            }
         }
     })();
 
