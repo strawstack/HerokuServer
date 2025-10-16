@@ -5,3 +5,8 @@ Heroku NodeJS Server for hosting functions and the back end for several side pro
 # Server URL
 
 https://heroku-server-rch-22279f2bdd5b.herokuapp.com/
+
+# ToDo
+
+- [ ] Implement heic2png
+- [ ] Style root landing page according to Figma design 
