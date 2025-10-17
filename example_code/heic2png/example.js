@@ -20,8 +20,6 @@ async function main() {
     // Get the response; a base64 png
     const { png } = await response.json(); 
 
-    // Log the base64
-    console.log(png);
     // Write the png file
     writeFileSync("example_code/heic2png/image.png", Buffer.from(png, 'base64'));
 }

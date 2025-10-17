@@ -10,6 +10,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "data-uri-to-buffer": "^6.0.2",
     "express": "^5.1.0",
     "heic-convert": "^2.1.0"
   },

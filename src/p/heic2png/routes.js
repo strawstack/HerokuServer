@@ -1,4 +1,5 @@
 import convert from 'heic-convert';
+import { dataUriToBuffer } from 'data-uri-to-buffer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -22,14 +23,10 @@ export function routes({ get, post }) {
             callback: async (req, res) => {
                 const base64 = req.body.heic;
                 const buffer = Buffer.from(base64, 'base64');
-
-                // TODO: See (https://www.npmjs.com/package/data-uri-to-buffer)
-
                 const outputBuffer = await convert({
                     buffer: buffer, // the HEIC file buffer
                     format: 'PNG'   // output format
                 });
-
                 res.send({png: outputBuffer});
             }
         }
