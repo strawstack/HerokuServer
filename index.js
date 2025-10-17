@@ -9,6 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 5006;
 const app = express();
 
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src')));
 
 //
@@ -30,7 +31,6 @@ for (let dir of readdirSync('src/p')) {
   endpoints[dir] = {};
   routes({
     get: ({route, query, desc, rtn, callback}) => {
-      
       endpoints[dir][route] = {
         type: "GET",
         query,
@@ -39,8 +39,8 @@ for (let dir of readdirSync('src/p')) {
       };
       app.get(`/p/${dir}${route}`, (req, res) => callback(req, res));
     },
-    post: (path, callback) => {
-      // Implement simillar to above GET request
+    post: ({route, query, desc, rtn, callback}) => {
+      app.post(`/p/${dir}${route}`, (req, res) => callback(req, res));
     }
   });
 }

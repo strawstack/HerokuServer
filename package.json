@@ -10,7 +10,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "heic-convert": "^2.1.0"
   },
   "keywords": [
     "node",
