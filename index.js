@@ -1,4 +1,6 @@
+import { createServer } from 'node:http';
 import { fileURLToPath } from 'url';
+import { Server } from 'socket.io';
 import { readdirSync } from 'fs';
 import { dirname } from 'path';
 import express from 'express';
@@ -8,6 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const port = process.env.PORT || 5006;
 const app = express();
+const server = createServer(app);
+const io = new Server(server);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'src')));
@@ -46,6 +50,16 @@ for (let dir of readdirSync('src/p')) {
 }
 
 //
+// Socket server
+//
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+//
 // Documentation endpoint
 //
 app.get('/endpoints', (req, res) => {
@@ -55,7 +69,7 @@ app.get('/endpoints', (req, res) => {
 //
 // Start Server
 //
-const server = app.listen(port, () => {
+server.listen(port, () => {
   console.log(`http://localhost:${port}`)
 });
 
