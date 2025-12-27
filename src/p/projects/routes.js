@@ -39,7 +39,7 @@ export function routes({ get }) {
                     const get_response = await fetch("https://api.github.com/users/strawstack/repos", requestOptions);
                     const get_data = await get_response.json();
                     writeFileSync(`${__dirname}/data/projects.json`, JSON.stringify(get_data));
-                    res.send("/p/projects/get");
+                    res.send("Visit -> /p/projects/get");
                 } else {
                     res.sendFile(`site/index.html`, {root: __dirname});
                 }
