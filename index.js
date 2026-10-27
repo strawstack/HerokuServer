@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   res.sendFile("src/index.html");
 });
 
-app.get("/post", (req, res) => {
+app.post("/post", (req, res) => {
   const body = req.body;
   res.json({ hello: "sam" });
 });
