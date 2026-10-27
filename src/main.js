@@ -15,7 +15,7 @@
       if (canSend) {
         canSend = false;
         setTimeout(() => {
-          const text = `HEY! Your task is now overdue.`;
+          const text = `Message received`;
           const notification = new Notification("Title", { body: text });
           console.log("notification sent");
           canSend = true;
