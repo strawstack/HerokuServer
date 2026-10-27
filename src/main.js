@@ -8,7 +8,7 @@
       console.log(result);
     });
 
-  const sendOnce = false;
+  let sendOnce = false;
 
   document.body.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
