@@ -37,7 +37,6 @@ app.post("/post", (req, res) => {
     res.send(200);
   } else if (body.type === GET_MESSAGES_TYPE) {
     const { key } = body;
-    console.log(`key: ${key}`);
     res.json(
       storage
         .filter((msg) => msg.from === key || msg.to === key)
