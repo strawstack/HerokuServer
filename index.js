@@ -13,12 +13,13 @@ const server = createServer(app);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "src")));
 
-const ROOT_KEY = "this_is_the_root_key";
-const SECRET_CLEAR_KEY = "secret_clear_type";
-
 const CLEAR_TYPE = "clear_type";
 const MESSAGE_TYPE = "MESSAGE";
 const GET_MESSAGES_TYPE = "GET_MESSAGES";
+
+const LOCAL_KEY = "this_is_local_key";
+const ROOT_KEY = "this_is_the_root_key";
+const SECRET_CLEAR_KEY = "secret_clear_type";
 
 const storage = [];
 
@@ -44,6 +45,9 @@ app.post("/post", (req, res) => {
   } else if (body.type === CLEAR_TYPE) {
     const { key } = body;
     if (key === SECRET_CLEAR_KEY) storage.splice(0, storage.length);
+    res.send(200);
+  } else {
+    res.send(404);
   }
 });
 
