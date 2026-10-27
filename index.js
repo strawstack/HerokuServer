@@ -14,10 +14,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "src")));
 
 const ROOT_KEY = "this_is_the_root_key";
-const CLEAR_KEY = "clear_type";
 const SECRET_CLEAR_KEY = "secret_clear_type";
-const MESSAGE_KEY = "MESSAGE";
-const GET_MESSAGES_KEY = "GET_MESSAGES";
+
+const CLEAR_TYPE = "clear_type";
+const MESSAGE_TYPE = "MESSAGE";
+const GET_MESSAGES_TYPE = "GET_MESSAGES";
 
 const storage = [];
 
@@ -30,20 +31,19 @@ app.get("/", (req, res) => {
 
 app.post("/post", (req, res) => {
   const body = req.body;
-  if (body.type === MESSAGE_KEY) {
+  if (body.type === MESSAGE_TYPE) {
     storage.push(body);
     res.send(200);
-  } else if (body.type === GET_MESSAGES_KEY) {
+  } else if (body.type === GET_MESSAGES_TYPE) {
     const { key } = body;
     res.json(
       storage
         .filter((msg) => msg.from === key || msg.to === key)
         .sort((a, b) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10)),
     );
-  } else if (body.type === CLEAR_KEY) {
-    if (body.key === SECRET_CLEAR_KEY) {
-      storage.splice(0, storage.length);
-    }
+  } else if (body.type === CLEAR_TYPE) {
+    const { key } = body;
+    if (key === SECRET_CLEAR_KEY) storage.splice(0, storage.length);
   }
 });
 
