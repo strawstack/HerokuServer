@@ -14,6 +14,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "src")));
 
 const ROOT_KEY = "this_is_the_root_key";
+const CLEAR_KEY = "clear_type";
+const SECRET_CLEAR_KEY = "secret_clear_type";
 const MESSAGE_KEY = "MESSAGE";
 const GET_MESSAGES_KEY = "GET_MESSAGES";
 
@@ -32,12 +34,16 @@ app.post("/post", (req, res) => {
     storage.push(body);
     res.send(200);
   } else if (body.type === GET_MESSAGES_KEY) {
-    const { from, to } = body;
+    const { key } = body;
     res.json(
       storage
-        .filter((msg) => msg.from === from && msg.to === to)
+        .filter((msg) => msg.from === key || msg.to === key)
         .sort((a, b) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10)),
     );
+  } else if (body.type === CLEAR_KEY) {
+    if (body.key === SECRET_CLEAR_KEY) {
+      storage.splice(0, storage.length);
+    }
   }
 });
 
