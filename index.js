@@ -17,9 +17,9 @@ const CLEAR_TYPE = "clear_type";
 const MESSAGE_TYPE = "MESSAGE";
 const GET_MESSAGES_TYPE = "GET_MESSAGES";
 
-const LOCAL_KEY = "this_is_local_key";
-const ROOT_KEY = "this_is_the_root_key";
-const SECRET_CLEAR_KEY = "secret_clear_type";
+const LOCAL_KEY = "local_key_generated_per_client";
+const ROOT_KEY = "root_key_maybe_store_on_server_only";
+const SECRET_CLEAR_KEY = "secret_clear_key_dont_post_public";
 
 const storage = [];
 
