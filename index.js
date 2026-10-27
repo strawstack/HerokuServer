@@ -21,7 +21,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/post", (req, res) => {
-  res.send("hi");
+  const body = req.body;
+  res.json(body);
 });
 
 //
