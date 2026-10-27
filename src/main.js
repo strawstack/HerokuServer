@@ -17,6 +17,7 @@
       setTimeout(() => {
         const text = `HEY! Your task is now overdue.`;
         const notification = new Notification("Title", { body: text });
+        console.log("notification sent");
       }, 2000);
     }
   });
