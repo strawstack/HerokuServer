@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.post("/post", (req, res) => {
   const body = req.body;
-  res.json({ hello: "sam" });
+  res.json(body);
 });
 
 //
