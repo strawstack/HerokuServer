@@ -13,6 +13,12 @@ const server = createServer(app);
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "src")));
 
+const ROOT_KEY = "this_is_the_root_key";
+const MESSAGE_KEY = "MESSAGE";
+const GET_MESSAGES_KEY = "GET_MESSAGES";
+
+const storage = [];
+
 //
 // Routes
 //
@@ -22,7 +28,17 @@ app.get("/", (req, res) => {
 
 app.post("/post", (req, res) => {
   const body = req.body;
-  res.json(body);
+  if (body.type === MESSAGE_KEY) {
+    storage.push(body);
+    res.send(200);
+  } else if (body.type === GET_MESSAGES_KEY) {
+    const { from, to } = body;
+    res.json(
+      storage
+        .filter((msg) => msg.from === from && msg.to === to)
+        .sort((a, b) => parseInt(a.timestamp, 10) - parseInt(b.timestamp, 10)),
+    );
+  }
 });
 
 //
